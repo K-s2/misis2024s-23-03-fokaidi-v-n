@@ -31,7 +31,7 @@ void StackArr::pop() {
   if (isEmpty()) {
     throw std::runtime_error("Stack is empty. Cannot pop element.");
   }
-  return data_[--size];
+  delete data_[0];
 }
 
 Complex StackArr::top() {
@@ -39,7 +39,7 @@ Complex StackArr::top() {
   if (isEmpty()) {
     throw std::runtime_error("Stack is empty. Cannot get top element.");
   }
-  return top_->data_;
+  return data_[0];
 }
 
 bool StackArr::isEmpty() {
