@@ -21,12 +21,13 @@ StackArr::~StackArr() {
 
 void StackArr::push(Complex element) {
   if (isFull()) {
-    throw std::runtime_error("Stack is full. Cannot push element.");
+    capacity += 10;
+    size += 10;
   }
   data_[size++] = element;
 }
 
-Complex StackArr::pop() {
+void StackArr::pop() {
   if (isEmpty()) {
     throw std::runtime_error("Stack is empty. Cannot pop element.");
   }
@@ -34,10 +35,11 @@ Complex StackArr::pop() {
 }
 
 Complex StackArr::top() {
+  Complex top_{};
   if (isEmpty()) {
     throw std::runtime_error("Stack is empty. Cannot get top element.");
   }
-  return data_[size - 1];
+  return top_->data_;
 }
 
 bool StackArr::isEmpty() {
