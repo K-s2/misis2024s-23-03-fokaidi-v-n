@@ -1,66 +1,92 @@
-// 2023 by Polevoi Dmitry under Unlicense
-
-#pragma once
-
-#include <cstddef>
-#include <sstream>
 #include <stdexcept>
-#include <iostream>
-#include <cstddef>
 #include <dynarr/dynarr.hpp>
 
-DynArr::DynArr(const std::ptrdiff_t& size) {
-  if (size < 1) {
-    throw std::invalid_argument("Size mustr be natural number");
-  }
-  size_ = size;
-  capacity_ = size;
-  data_ = new float[size];
-  for (std::ptrdiff_t i = 0; i < size; i++) {
-    data_[i] = 0;
-  }
-}
-
-  std::ptrdiff_t DynArr::Size() const noexcept { return size_; }
-
-  void DynArr::Resize(const std::ptrdiff_t size) {
-    if (size < 1) {
-      throw std::invalid_argument("Size must be natural number");
-    }
-    if (size > capacity_) {
-      float* new_data_ = new float[size];
-      for (std::ptrdiff_t ind = 0; ind < capacity_; ind++) new_data_[ind] = data_[ind];
-      delete[] data_;
-      data_ = new_data_;
-    }
-    for (std::ptrdiff_t i = capacity_; i < size; i++) {
-      data_[i] = 0;
-    }
+DynArr::DynArr(const std::ptrdiff_t size) {
+  if (size <= 0) {
+    throw std::runtime_error("It is impossible to create an array of this size");
+  } else {
     size_ = size;
-  }
-
-float& DynArr::operator[](const std::ptrdiff_t index) {
-    if ((index < 0 ) || (index >= size_)) {
-      throw std::out_of_range("Index out of range");
+    capacity_ = (capacity_ > 2 * size_ ? capacity_ : 2 * size_);
+    mass_ = new float[capacity_];
+    for (std::ptrdiff_t i = 0; i < size_; ++i) {
+      mass_[i] = 0;
     }
-    return data_[index];
   }
-
-DynArr& DynArr::operator=(const DynArr& rhs) {
-  delete[] data_;
-  size_ = rhs.Size();
-  capacity_ = size_;
-  data_ = new float[size_];
-  for (std::ptrdiff_t i = 0; i < size_; i++) {
-    data_[i] = rhs[i];
-  }
-  return *this;
 }
 
-
-const float& DynArr::operator[](const std::ptrdiff_t index) const {
-    if ((index < 0) ||  (index >= size_)) {
-      throw std::out_of_range("Index out of range");
-    }
-    return data_[index];
+DynArr::DynArr(const DynArr& rhs) {
+  capacity_ = (capacity_ > 2 * rhs.size_ ? capacity_ : 2 * rhs.size_);
+  size_ = rhs.size_;
+  mass_ = new float[capacity_];
+  for (std::ptrdiff_t i = 0; i < size_; ++i) {
+    mass_[i] = rhs.mass_[i];
   }
+}
+
+DynArr::~DynArr() {
+  delete[] mass_;
+}
+
+DynArr& DynArr::operator= (const DynArr& rhs) {
+  if (rhs.size_ > capacity_ || 4 * rhs.size_ < capacity_) {
+    capacity_ = 2 * rhs.size_;
+    size_ = rhs.size_;
+    delete[] mass_;
+    mass_ = new float[capacity_];
+    for (std::ptrdiff_t i = 0; i < size_; ++i) {
+      mass_[i] = rhs.mass_[i];
+    }
+    return *this;
+  } else {
+    size_ = rhs.size_;
+    for (std::ptrdiff_t i = 0; i < size_; ++i) {
+      mass_[i] = rhs.mass_[i];
+    }
+    return *this;
+  }
+}
+
+void DynArr::Resize(const std::ptrdiff_t size) {
+  if (size <= 0) {
+    throw std::runtime_error("It is impossible to resize an array of this size");
+  } else {
+    if (size > size_) {
+      if (size > capacity_) {
+        capacity_ = 2 * size;
+        float* new_mass_ = new float[capacity_];
+        for (std::ptrdiff_t i = 0; i < size_; ++i) {
+          new_mass_[i] = mass_[i];
+        }
+        for (std::ptrdiff_t i = size_; i < size; ++i) {
+          new_mass_[i] = 0;
+        }
+        size_ = size;
+        delete[] mass_;
+        mass_ = new_mass_;
+      } else {
+        for (std::ptrdiff_t i = size_; i < size; ++i) {
+          mass_[i] = 0;
+        }
+        size_ = size;
+      }
+    } else {
+      size_ = size;
+    }
+  }
+}
+
+float& DynArr::operator[] (const std::ptrdiff_t ind) {
+  if (ind < 0 || ind >= size_) {
+    throw std::runtime_error("Index out of range");
+  } else {
+    return mass_[ind];
+  }
+}
+
+const float& DynArr::operator[](const std::ptrdiff_t ind) const {
+  if (ind < 0 || ind >= size_) {
+    throw std::runtime_error("Index out of range");
+  } else {
+    return mass_[ind];
+  }
+}
