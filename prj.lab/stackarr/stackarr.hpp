@@ -7,8 +7,8 @@
 
 class StackArr {
 private:
-  std::ptrdiff_t capacity;
-  std::ptrdiff_t size;
+  std::ptrdiff_t capacity_;
+  std::ptrdiff_t size_;
   Complex* data_;
 
 public:
