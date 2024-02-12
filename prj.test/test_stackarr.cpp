@@ -10,3 +10,18 @@ TEST_CASE("Top function") {
   arr.push(x);
   CHECK((arr.top() == x));
 }
+
+TEST_CASE("Empty function") {
+  StackArr arr;
+  Complex x{ 2, 3 };
+  arr.push(x);
+  CHECK((arr.isEmpty() == 0));
+}
+
+TEST_CASE("Empty function") {
+  StackArr arr;
+  Complex x{ 2, 3 };
+  arr.push(x);
+  arr.pop();
+  CHECK((arr.isEmpty() == 1));
+}

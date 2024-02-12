@@ -17,7 +17,7 @@ public:
   ~StackArr();
 
   void push(Complex element);
-  void pop();
+  void pop() noexcept;
   Complex top();
   bool isEmpty();
   bool isFull();

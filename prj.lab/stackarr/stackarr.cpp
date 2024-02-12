@@ -27,7 +27,7 @@ void StackArr::push(Complex element) {
   data_[size_++] = element;
 }
 
-void StackArr::pop() {
+void StackArr::pop() noexcept {
   if (isEmpty()) {
     throw std::runtime_error("Stack is empty. Cannot pop element.");
   }
