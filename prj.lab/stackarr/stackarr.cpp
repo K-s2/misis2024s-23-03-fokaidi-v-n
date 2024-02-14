@@ -1,77 +1,48 @@
-#include "StackArr.hpp"
+#include <complex/complex.hpp>
+#include <stackarr/stackarr.hpp>
 
-StackArr::StackArr(std::ptrdiff_t size) {
-  capacity_ = size;
-  size_ = 0;
-  data_ = new Complex[capacity_];
+#include <algorithm>
+#include <stdexcept>
+
+bool StackArr::IsEmpty() const noexcept {
+  return 0 <= i_top_;
 }
 
-StackArr::StackArr(const StackArr& other) {
-  capacity_ = other.capacity_;
-  size_ = other.size_;
-  data_ = new Complex[capacity_];
-  for (std::ptrdiff_t i = 0; i < size_; ++i) {
-    data_[i] = other.data_[i];
+void StackArr::Pop() noexcept {
+  if (!IsEmpty()) {
+    i_top_ -= 1;
   }
 }
 
-StackArr::~StackArr() {
-  delete[] data_;
-}
-
-void StackArr::push(Complex element) {
-  if (isFull()) {
-    capacity_ += 10;
-    size_ += 10;
+void StackArr::Push(const Complex& val) {
+  if (nullptr == data_) {
+    size_ = 8;
+    data_ = new Complex[size_];
   }
-  data_[size_++] = element;
-}
-
-void StackArr::pop() noexcept {
-  if (isEmpty()) {
-    throw std::runtime_error("Stack is empty. Cannot pop element.");
+  else if (size_ == i_top_ + 1) {
+    auto buf = new Complex(size_ * 2);
+    std::copy(data_, data_ + size_, buf);
+    std::swap(data_, buf);
+    delete[] buf;
+    size_ *= 2;
   }
-  Complex* new_data = new Complex[capacity_];
-  for (int i = 0; i < size_ - 1; i++) {
-    new_data[i] = data_[i];
+  data_[++i_top_] = val;
+}
+
+Complex& StackArr::Top() {
+  if (i_top_ < 0) {
+    throw std::logic_error("StackArr - try get top form empty stack.");
   }
-  delete[] data_;
-  size_ -= 1;
-  data_ = new_data;
-  delete[] new_data;
+  return data_[i_top_];
 }
 
-Complex StackArr::top() {
-  Complex top_{};
-  if (isEmpty()) {
-    throw std::runtime_error("Stack is empty. Cannot get top element.");
+const Complex& StackArr::Top() const {
+  if (i_top_ < 0) {
+    throw std::logic_error("StackArr - try get top form empty stack.");
   }
-  return data_[0];
+  return data_[i_top_];
 }
 
-bool StackArr::isEmpty() {
-  return size_ == 0;
+void StackArr::Clear() noexcept {
+  i_top_ = -1;
 }
-
-bool StackArr::isFull() {
-  return size_ == capacity_;
-}
-
-StackArr& StackArr::operator=(const StackArr& other) {
-  if (this == &other) {
-    return *this;
-  }
-
-  delete[] data_;
-
-  capacity_ = other.capacity_;
-  size_ = other.size_;
-  data_ = new Complex[capacity_];
-
-  for (std::ptrdiff_t i = 0; i < size_; ++i) {
-    data_[i] = other.data_[i];
-  }
-
-  return *this;
-}
-

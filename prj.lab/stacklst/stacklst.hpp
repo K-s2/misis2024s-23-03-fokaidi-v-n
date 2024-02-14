@@ -7,6 +7,9 @@
 #include <cstddef>
 #include <complex/complex.hpp>
 
+
+class Complex;
+
 class StackLst {
 public:
   [[nodiscard]] StackLst() = default;
@@ -31,6 +34,7 @@ public:
 
 private:
   struct Node {
+    Node(Complex v_, Node* n) { v = v_; next = n; }
     Complex v;
     Node* next = nullptr;
   };
