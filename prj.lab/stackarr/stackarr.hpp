@@ -1,12 +1,9 @@
-// 2024 by Polevoi Dmitry under Unlicense
-
-#pragma once
+ï»¿#pragma once
 #ifndef STACKARR_STACKARR_HPP_20240203
 #define STACKARR_STACKARR_HPP_20240203
-
+#include <complex/complex.hpp>
 #include <cstddef>
 
-class Complex;
 
 class StackArr {
 public:
@@ -31,9 +28,9 @@ public:
   void Clear() noexcept;
 
 private:
-  std::ptrdiff_t size_ = 0;   //!< ÷èñëî ýëåìåíòîâ â áóôåðå
-  std::ptrdiff_t i_top_ = -1; //!< èíäåêñ top ýëåìåíòà
-  Complex* data_ = nullptr;   //!< ýëåìåíòû ñòåêà
+  std::ptrdiff_t size_ = 0;   //!< Ñ‡Ð¸ÑÐ»Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² Ð² Ð±ÑƒÑ„ÐµÑ€Ðµ
+  std::ptrdiff_t i_top_ = -1; //!< Ð¸Ð½Ð´ÐµÐºÑ top ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°
+  Complex* data_ = nullptr;   //!< ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ñ‹ ÑÑ‚ÐµÐºÐ°
 };
 
 #endif // !STACKARR_STACKARR_HPP_20240203
