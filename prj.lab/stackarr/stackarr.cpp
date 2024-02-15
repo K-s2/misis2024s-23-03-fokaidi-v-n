@@ -1,3 +1,5 @@
+
+
 #include <complex/complex.hpp>
 #include <stackarr/stackarr.hpp>
 
@@ -5,7 +7,7 @@
 #include <stdexcept>
 
 bool StackArr::IsEmpty() const noexcept {
-  return 0 <= i_top_;
+  return not(size_);
 }
 
 void StackArr::Pop() noexcept {
@@ -15,7 +17,7 @@ void StackArr::Pop() noexcept {
 }
 
 void StackArr::Push(const Complex& val) {
-  if (nullptr == data_) {
+  if (nullptr == data_) { 
     size_ = 8;
     data_ = new Complex[size_];
   }
