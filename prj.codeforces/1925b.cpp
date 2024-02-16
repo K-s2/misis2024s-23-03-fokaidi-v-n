@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 
 int gcd(int a, int b) {
@@ -18,15 +19,17 @@ int main() {
 	for (int r = 0; r < t; r++) {
 		int x = 0;
 		int max_ = 0;
-		std::vector<int> mac_i;
 		int n = 0;
 		std::cin >> x >> n;
-		int d = n / x + 1;
-		int i = 1;
-		while((x* i) < n){
-			max_ = gcd(n - (x - 1) * i, i);
+		int d = 0;
+		d = x / n ;
+		//std::cout << n;
+		int i = d;
+		int p = x/ d;
+		while ((n * i) < x) {
+			max_ = std::max(gcd(x - p* i, i), max_);
 			i++;
 		}
-		std::cout << max_<<std::endl;
+		std::cout << max_ << std::endl;
 	}
 }
