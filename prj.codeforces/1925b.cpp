@@ -17,19 +17,19 @@ int main() {
 	int t = 0;
 	std::cin >> t;
 	for (int r = 0; r < t; r++) {
-		int x = 0;
-		int max_ = 0;
-		int n = 0;
-		std::cin >> x >> n;
-		int d = 0;
-		d = x / n ;
-		//std::cout << n;
-		int i = d;
-		int p = x/ d;
-		while ((n * i) < x) {
-			max_ = std::max(gcd(x - p* i, i), max_);
-			i++;
-		}
-		std::cout << max_ << std::endl;
+    int x, n;
+    std::cin >> x >> n;
+    int ans = 1;
+    for (int i = 1; i * i <= x; i++)
+    {
+      if (x % i == 0)
+      {
+        if (n <= x / i)
+          ans = std::max(ans, i);
+        if (n <= i)
+          ans = std::max(ans, x / i);
+      }
+    }
+    std::cout << ans << '\n';
 	}
 }
