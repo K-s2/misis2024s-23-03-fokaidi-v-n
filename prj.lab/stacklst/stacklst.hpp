@@ -14,7 +14,7 @@ class StackLst {
 public:
   [[nodiscard]] StackLst() = default;
 
-  [[nodiscard]] StackLst(const StackLst&) = default;
+  [[nodiscard]] StackLst(const StackLst& a);
 
   ~StackLst() = default;
 

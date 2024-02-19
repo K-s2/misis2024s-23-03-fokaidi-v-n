@@ -1,6 +1,28 @@
 #include "Stacklst.hpp"
 #include <stdexcept>
 
+
+StackLst::StackLst(const StackLst& w) {
+	if (w.head_) {
+		Node* current = w.head_;
+		head_ = new Node(current->v, nullptr); // Создаем новый узел с данными из первого узла во входном стеке
+		Node* newCurrent = head_;
+		Node* oldCurrent = current;
+		int size_ = 1; // Учитываем первый узел
+
+		while (oldCurrent->next) {
+			oldCurrent = oldCurrent->next;
+			newCurrent->next = new Node(oldCurrent->v, nullptr); // Создаем новый узел для каждого узла во входном стеке
+			newCurrent = newCurrent->next;
+			size_++;
+		}
+
+		// В size_ теперь хранится количество узлов в скопированном стеке
+	}
+}
+
+
+
 bool StackLst::IsEmpty() const noexcept{
 	return head_==nullptr;
 }
@@ -30,6 +52,14 @@ const Complex& StackLst::Top() const {
 
 void StackLst::Pop() noexcept {
 	if (head_) {
+		Node* t = head_;
+		head_ = head_->next;
+		delete t;
+	}
+}
+
+void StackLst::Clear() {
+	while (head_) {
 		Node* t = head_;
 		head_ = head_->next;
 		delete t;
