@@ -2,37 +2,26 @@
 #include <stdexcept>
 
 
-StackLst::StackLst(const StackLst& w) {
-	if (w.head_) {
-		Node* current = w.head_;
-		head_ = new Node(current->v, nullptr); // Создаем новый узел с данными из первого узла во входном стеке
-		Node* newCurrent = head_;
-		Node* oldCurrent = current;
-		int size_w = 1; // Учитываем первый узел
+StackLst::StackLst(const StackLst& a) {
+	Node* src = a.head_;
+	Node* dest = nullptr;
+	Node* new_node = nullptr;
 
-		while (oldCurrent->next) {
-			oldCurrent = oldCurrent->next;
-			newCurrent->next = new Node(oldCurrent->v, nullptr); // Создаем новый узел для каждого узла во входном стеке
-			newCurrent = newCurrent->next;
-			size_w++;
+	while (src != nullptr) {
+		new_node = new Node(src->v, nullptr);
+
+		if (head_ == nullptr) {
+			head_ = new_node;
+			dest = head_;
+		}
+		else {
+			dest->next = new_node;
+			dest = dest->next;
 		}
 
-		Node* current = head_;
-		head_ = new Node(current->v, nullptr); // Создаем новый узел с данными из первого узла во входном стеке
-		Node* newCurrent = head_;
-		Node* oldCurrent = current;
-		int size_ = 1; // Учитываем первый узел
-
-		while (oldCurrent->next) {
-			oldCurrent = oldCurrent->next;
-			newCurrent->next = new Node(oldCurrent->v, nullptr); // Создаем новый узел для каждого узла во входном стеке
-			newCurrent = newCurrent->next;
-			size_++;
-		}
-		
+		src = src->next;
 	}
 }
-
 
 
 bool StackLst::IsEmpty() const noexcept{
@@ -70,7 +59,7 @@ void StackLst::Pop() noexcept {
 	}
 }
 
-void StackLst::Clear() {
+void StackLst::Clear() noexcept{
 	while (head_) {
 		Node* t = head_;
 		head_ = head_->next;

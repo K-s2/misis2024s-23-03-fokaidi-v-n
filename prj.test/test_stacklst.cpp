@@ -29,3 +29,11 @@ TEST_CASE("Pop function") {
   arr.Pop();
   CHECK((arr.Top() == x));
 }
+
+TEST_CASE("Ñopy") {
+  StackLst arr;
+  Complex x{ 2, 3 };
+  CHECK((arr.IsEmpty() == 1));
+  StackLst arr2{ arr };
+  CHECK((arr2.Top() == x));
+}
