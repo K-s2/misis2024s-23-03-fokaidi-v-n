@@ -33,7 +33,13 @@ TEST_CASE("Pop function") {
 TEST_CASE("Ñopy") {
   StackLst arr;
   Complex x{ 2, 3 };
+  arr.Push(x);
+  CHECK((arr.IsEmpty() == 0));
+  CHECK((arr.Top() == x));
+  StackLst arr1{ arr };
+  CHECK((arr1.IsEmpty() == 0));
+  CHECK((arr1.Top() == x));
+  arr.Pop();
   CHECK((arr.IsEmpty() == 1));
-  StackLst arr2{ arr };
-  CHECK((arr2.Top() == x));
+  CHECK((arr1.Top() == x));
 }
