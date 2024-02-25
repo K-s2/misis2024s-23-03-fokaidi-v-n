@@ -13,22 +13,24 @@ int main() {
 		std::cin >> x;
 		int d = 0;
 		int m = 0;
-		std::vector<int> a;
+		int y = n + 1;
+		std::vector<int> a(y);
 		for (int i = 0; i < n; i++) {
 			std::cin >> d;
 			m += d;
 			a.push_back(d);
 		}
-		std::sort(a.begin(), a.end());
+		std::sort(a.begin(), a.end(),	std::greater<int>());
 		int r = 0;
-		int an = 0;
+		d = 0;
+		int an = -1e9;
 		int h = 0;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < x; j++) {
-				r += a[n - i - 1];
-			}
-			an = std::max(an, (m - r));
-			a.pop_back();
+		for (int i = 0; i < x; i++) {
+			d += a[n - i - 1];
+			a[i] += a[i + 1];
+		}
+		for (int j = 0; j <= k; j++) {
+			an = std::max(an, a[n] - 2 * a[std::min(j + x, n)] + a[j]);
 		}
 		std::cout << an << std::endl;
 	}
