@@ -6,11 +6,13 @@
 class DynArr {
 public:
   DynArr() { capacity_ = 10; size_ = 0; mass_ = new float[10]; };
+  DynArr(DynArr&& other);
   DynArr(const DynArr& rhs);
   DynArr(const std::ptrdiff_t size);
   ~DynArr();
 
   DynArr& operator= (const DynArr& rhs);
+  DynArr& operator=(DynArr&& other);
   void Resize(const std::ptrdiff_t size);
 
   float& operator[](const std::ptrdiff_t ind);

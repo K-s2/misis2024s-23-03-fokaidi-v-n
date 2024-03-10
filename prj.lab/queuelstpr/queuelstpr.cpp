@@ -7,6 +7,26 @@ bool QueueLstPr::IsEmpty() const noexcept {
   return nullptr == head_;
 }
 
+QueueLstPr::QueueLstPr(QueueLstPr&& other)
+  : head_(other.head_), tail_(other.tail_), size_(other.size_) {
+  other.head_ = nullptr;
+  other.tail_ = nullptr;
+  other.size_ = 0;
+}
+
+QueueLstPr& QueueLstPr::operator=(QueueLstPr&& other) {
+  if (this != &other) {
+    Clear();
+    head_ = other.head_;
+    tail_ = other.tail_;
+    size_ = other.size_;
+    other.head_ = nullptr;
+    other.tail_ = nullptr;
+    other.size_ = 0;
+  }
+  return *this;
+}
+
 void QueueLstPr::Pop() noexcept {
   if (!IsEmpty()) {
     Node* tmp = head_->next;

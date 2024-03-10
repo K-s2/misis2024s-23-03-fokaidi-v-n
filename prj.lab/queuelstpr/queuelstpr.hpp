@@ -19,6 +19,8 @@ public:
   [[nodiscard]] QueueLstPr& operator=(const QueueLstPr&) = default;
 
   [[nodiscard]] bool IsEmpty() const noexcept;
+  [[nodiscard]] QueueLstPr& operator=(QueueLstPr&&);
+  QueueLstPr(QueueLstPr&&);
 
   void Pop() noexcept;
 

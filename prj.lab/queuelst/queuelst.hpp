@@ -11,9 +11,13 @@ public:
 
   QueueLst(const QueueLst&);
 
+  QueueLst(QueueLst&&);
+
   ~QueueLst();
 
   [[nodiscard]] QueueLst& operator=(const QueueLst&);
+
+  QueueLst& operator=(QueueLst&& other);
 
   [[nodiscard]] bool IsEmpty() const noexcept;
 

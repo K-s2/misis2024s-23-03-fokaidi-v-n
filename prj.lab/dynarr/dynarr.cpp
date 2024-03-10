@@ -1,6 +1,29 @@
 #include <stdexcept>
 #include <dynarr/dynarr.hpp>
 
+
+DynArr::DynArr(DynArr&& other) : size_(other.size_), capacity_(other.capacity_), mass_(other.mass_) {
+  other.size_ = 0;
+  other.capacity_ = 0;
+  other.mass_ = nullptr;
+}
+
+// Оператор перемещения для оператора присваивания перемещения
+DynArr& DynArr::operator=(DynArr&& other) {
+  if (this != &other) {
+    delete[] mass_;
+    size_ = other.size_;
+    capacity_ = other.capacity_;
+    mass_ = other.mass_;
+
+    other.size_ = 0;
+    other.capacity_ = 0;
+    other.mass_ = nullptr;
+  }
+  return *this;
+}
+
+
 DynArr::DynArr(const std::ptrdiff_t size) {
   if (size <= 0) {
     throw std::runtime_error("It is impossible to create an array of this size");
