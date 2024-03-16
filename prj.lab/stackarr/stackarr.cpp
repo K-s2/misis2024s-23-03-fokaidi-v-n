@@ -1,10 +1,23 @@
-
-
 #include <complex/complex.hpp>
 #include <stackarr/stackarr.hpp>
-
 #include <algorithm>
 #include <stdexcept>
+
+
+StackArr::StackArr(StackArr&& rhs) {
+  std::swap(size_, rhs.size_);
+  std::swap(i_top_, rhs.i_top_);
+  std::swap(data_, rhs.data_);
+}
+
+StackArr& StackArr::operator=(StackArr&& rhs) {
+  if (this != &rhs) {
+    std::swap(size_, rhs.size_);
+    std::swap(i_top_, rhs.i_top_);
+    std::swap(data_, rhs.data_);
+  }
+  return *this;
+}
 
 bool StackArr::IsEmpty() const noexcept {
   return not(size_);

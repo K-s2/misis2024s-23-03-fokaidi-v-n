@@ -1,6 +1,4 @@
 #include <queuelstpr/queuelstpr.hpp>
-
-
 #include <stdexcept>
 
 bool QueueLstPr::IsEmpty() const noexcept {
@@ -33,7 +31,7 @@ void QueueLstPr::Pop() noexcept {
     delete head_;
     head_ = tmp;
     if (head_ == nullptr)
-      tail_ = nullptr;
+      tail_ = nullptr;  
 
     size_--;
   }

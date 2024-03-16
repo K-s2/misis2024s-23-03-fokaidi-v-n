@@ -13,9 +13,15 @@ public:
 
 	QueueArr(const QueueArr&) = default;
 
+	QueueArr(QueueArr&& rhs);
+
 	bool IsEmpty();
 
 	void Pop() noexcept;
+
+	QueueArr& operator=(QueueArr&& rhs);
+
+	QueueArr& operator=(const QueueArr&);
 
 	void Push(const Complex& z) noexcept;
 
