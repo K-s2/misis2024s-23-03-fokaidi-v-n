@@ -1,5 +1,12 @@
 #include "Stacklst.hpp"
 #include <stdexcept>
+#include <algorithm>
+
+StackLst& StackLst::operator=(StackLst&& rhs) {
+	if (this != &rhs) {
+		std::swap(rhs.head_, head_);
+	}
+}
 
 
 StackLst::StackLst(const StackLst& a) {

@@ -7,7 +7,6 @@
 #include <cstddef>
 #include <complex/complex.hpp>
 
-
 class Complex;
 
 class StackLst {
@@ -15,6 +14,8 @@ public:
   [[nodiscard]] StackLst() = default;
 
   [[nodiscard]] StackLst(const StackLst& a);
+
+  StackLst& operator=(StackLst&& rhs);
 
   ~StackLst() = default;
 
