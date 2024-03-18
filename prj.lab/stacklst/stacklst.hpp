@@ -11,17 +11,17 @@ class Complex;
 
 class StackLst {
 public:
-  [[nodiscard]] StackLst() = default;
+  StackLst() = default;
 
-  [[nodiscard]] StackLst(const StackLst& a);
+  StackLst(const StackLst& a);
 
   StackLst& operator=(StackLst&& rhs);
 
   ~StackLst() = default;
 
-  [[nodiscard]] StackLst& operator=(const StackLst&) = default;
+  StackLst& operator=(const StackLst&) = default;
 
-  bool IsEmpty() const noexcept;
+  [[nodiscard]]  bool IsEmpty() const noexcept;
 
   void Pop() noexcept;
 
@@ -42,4 +42,4 @@ private:
   Node* head_ = nullptr;
 };
 
-#endif // !STACKARR_STACKARR_HPP_20240203
+#endif // !STACKARR_STACKARR_HPP_20240203 

@@ -6,6 +6,7 @@ StackLst& StackLst::operator=(StackLst&& rhs) {
 	if (this != &rhs) {
 		std::swap(rhs.head_, head_);
 	}
+	return *this;
 }
 
 
