@@ -1,4 +1,4 @@
-
+// 2024 by Polevoi Dmitry under Unlicense
 
 #pragma once
 #ifndef BITSET_BITSET_HPP_20240318
@@ -44,7 +44,7 @@ public:
 
   [[nodiscard]] BitSet& operator^=(const BitSet& rhs);
 
-  [[nodiscard]] BitSet& operator~=();
+  [[nodiscard]] BitSet& operator~();
 
   // ? operator[](const int32_t) - what can return
   // std::ostream& WriteTxt(std::ostream&)
@@ -61,8 +61,8 @@ private:
 
 [[nodiscard]] BitSet operator&(const BitSet& rhs);
 
-[[nodiscard]] BitSet operator|(const BitSet& rhs);
+//[[nodiscard]] BitSet operator|(const BitSet& rhs);
 
-[[nodiscard]] BitSet operator^(const BitSet& rhs);
+//[[nodiscard]] BitSet operator^(const BitSet& rhs);
 
 #endif
