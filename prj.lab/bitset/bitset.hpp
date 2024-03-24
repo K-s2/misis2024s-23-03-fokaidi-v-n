@@ -16,7 +16,7 @@ public:
 
   BitSet(BitSet&&) = default;
 
-  BitSet(const std::int32_t);
+  BitSet(const std::int32_t size);
 
   BitSet& operator=(const BitSet&) = default;
 
