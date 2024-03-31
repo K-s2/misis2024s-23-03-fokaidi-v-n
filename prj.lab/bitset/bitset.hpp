@@ -7,20 +7,33 @@
 #include <cstdint>
 #include <iosfwd>
 #include <vector>
+#include <stdexcept>
 
 class BitSet {
 public:
+  class BiA {
+    public:
+      BiA() = delete;
+      BiA(BitSet& bs, const int32_t idx);
+      BitSet& operator=(const BiA&);
+      BitSet& operator=(bool val);
+      operator bool() const;
+    private:
+      BitSet& bs_;
+      int32_t idx;
+  };
+
   BitSet() = default;
 
-  BitSet(const BitSet&) = default;
+  BitSet(const BitSet&);
 
-  BitSet(BitSet&&) = default;
+  BitSet(BitSet&&) noexcept;
 
-  BitSet(const std::int32_t size);
+  BitSet(const int32_t);
 
-  BitSet& operator=(const BitSet&) = default;
+  BitSet& operator=(const BitSet&);
 
-  BitSet& operator=(BitSet&&) = default;
+  BitSet& operator=(BitSet&&) noexcept;
 
   ~BitSet() = default;
 
@@ -44,9 +57,9 @@ public:
 
   [[nodiscard]] BitSet& operator^=(const BitSet& rhs);
 
-  [[nodiscard]] BitSet& operator~();
+  [[nodiscard]] BitSet operator~();
 
-  // ? operator[](const int32_t) - what can return
+  BiA& operator[](const int32_t);
   // std::ostream& WriteTxt(std::ostream&)
   // std::ostream& WriteBinary(std::ostream&)
   // std::istream& ReadTxt(std::istream&)
@@ -59,10 +72,10 @@ private:
 // std::ostream& operaror<<(std::ostream&, const BitSet&);
 // std::istream& operaror>>(std::istream&, BitSet&);
 
-[[nodiscard]] BitSet operator&(const BitSet& rhs);
+[[nodiscard]] BitSet operator&(const BitSet& lhs, const BitSet& rhs);
 
-//[[nodiscard]] BitSet operator|(const BitSet& rhs);
+[[nodiscard]] BitSet operator|(const BitSet& lhs, const BitSet& rhs);
 
-//[[nodiscard]] BitSet operator^(const BitSet& rhs);
+[[nodiscard]] BitSet operator^(const BitSet& lhs, const BitSet& rhs);
 
 #endif
