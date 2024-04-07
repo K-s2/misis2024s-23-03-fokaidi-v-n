@@ -6,22 +6,35 @@
 
 #include <cstdint>
 #include <iosfwd>
+#include <iostream>
+#include <sstream>
+#include <fstream>
 #include <vector>
 #include <stdexcept>
 
 class BitSet {
 public:
   class BiA {
-    public:
-      BiA() = delete;
-      BiA(BitSet& bs, const int32_t idx);
-      BitSet& operator=(const BiA&);
-      BitSet& operator=(bool val);
-      operator bool() const;
-    private:
-      BitSet& bs_;
-      int32_t idx;
+  public:
+    BiA() = delete;
+    BiA(BitSet& bs, const int32_t idx) : bs_(bs), idx(idx) {};
+    BitSet& operator=(const BiA& other) {
+      const bool other_val = other.bs_.Get(other.idx);
+      bs_.Set(idx, other_val);
+      return bs_;
+    };
+    BitSet& operator=(bool val) {
+      bs_.Set(idx, val);
+      return bs_;
+    };
+    operator bool() const {
+      return bs_.Get(idx);
+    };
+  private:
+    BitSet& bs_;
+    int32_t idx;
   };
+
 
   BitSet() = default;
 
@@ -59,7 +72,10 @@ public:
 
   [[nodiscard]] BitSet operator~();
 
-  BiA& operator[](const int32_t);
+  BitSet::BiA operator[](const int32_t);
+  std::ofstream WriteBinary(std::ofstream& cout);
+  std::ifstream& ReadBinary(std::ifstream& cin);
+
   // std::ostream& WriteTxt(std::ostream&)
   // std::ostream& WriteBinary(std::ostream&)
   // std::istream& ReadTxt(std::istream&)

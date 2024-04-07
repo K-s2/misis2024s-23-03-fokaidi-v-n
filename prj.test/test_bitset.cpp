@@ -20,12 +20,19 @@ TEST_CASE("Fill and constructor") {
 }
 
 
-TEST_CASE("Get") {
-  BitSet b(2);
-  CHECK((b.Size() == 2));
-  BitSet c(33);
-  CHECK((b.Get(0) == 0));
-  CHECK((c.Get(32) == 0));
+
+TEST_CASE("Ops") {
+  SUBCASE("[]") {
+    BitSet bs(10);
+    bs[0] = 1;
+    bs[2] = 1;
+    CHECK(bs.Get(0) == 1);
+    // std::cout << bs.Get(0) << " " << bs.Get(1) << " " << bs.Get(2) << "\n";
+    BitSet bs1(10);
+    bs1[2] = 0;
+    bs[0] = bs1[2];
+    CHECK(bs[0] == 0);
+  }
 }
 
 
