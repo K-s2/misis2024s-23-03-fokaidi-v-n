@@ -73,7 +73,7 @@ public:
   [[nodiscard]] BitSet operator~();
 
   BitSet::BiA operator[](const int32_t);
-  std::ofstream WriteBinary(std::ofstream& cout);
+  std::ofstream& WriteBinary(std::ofstream& cout);
   std::ifstream& ReadBinary(std::ifstream& cin);
 
   // std::ostream& WriteTxt(std::ostream&)

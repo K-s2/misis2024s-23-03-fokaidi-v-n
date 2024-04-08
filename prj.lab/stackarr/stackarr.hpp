@@ -1,33 +1,36 @@
-﻿#pragma once
+﻿// 2024 by Polevoi Dmitry under Unlicense
+
+#pragma once
 #ifndef STACKARR_STACKARR_HPP_20240203
 #define STACKARR_STACKARR_HPP_20240203
+
 #include <complex/complex.hpp>
+
 #include <cstddef>
 
-
-class StackArr {
+class StackArr final {
 public:
-  [[nodiscard]] StackArr() = default;
+  StackArr() = default;
 
-  [[nodiscard]] StackArr(const StackArr&) = default;
+  StackArr(const StackArr& src);
 
-  StackArr(StackArr&& rhs);
+  StackArr(StackArr&& src) noexcept;
 
-  ~StackArr() = default;
+  ~StackArr();
 
-  [[nodiscard]] StackArr& operator=(const StackArr&  rhs) = default;
+  StackArr& operator=(const StackArr& src);
 
-  StackArr& operator=(StackArr&&);
+  StackArr& operator=(StackArr&& src) noexcept;
 
-  bool IsEmpty() const noexcept;
+  [[nodiscard]] bool IsEmpty() const noexcept;
 
   void Pop() noexcept;
 
   void Push(const Complex& val);
 
-  [[nodiscard]] Complex& Top();
+  [[nodiscard]] Complex& Top()&;
 
-  [[nodiscard]] const Complex& Top() const;
+  [[nodiscard]] const Complex& Top() const&;
 
   void Clear() noexcept;
 
