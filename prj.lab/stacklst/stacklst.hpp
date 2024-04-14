@@ -1,45 +1,44 @@
-// 2024 by Polevoi Dmitry under Unlicense
-
 #pragma once
-#ifndef STACKARR_STACKARR_HPP_20240203
-#define STACKARR_STACKARR_HPP_20240203
+#ifndef STACKLST_STACKLST_HPP_20240213
+#define STACKLST_STACKLST_HPP_20240213
 
-#include <cstddef>
 #include <complex/complex.hpp>
 
-class Complex;
+#include <cstddef>
 
-class StackLst {
+class StackLst final {
 public:
   StackLst() = default;
 
-  StackLst(const StackLst& a);
+  StackLst(const StackLst& src);
 
-  StackLst& operator=(StackLst&& rhs);
+  StackLst(StackLst&& src) noexcept;
 
   ~StackLst() = default;
 
-  StackLst& operator=(const StackLst&) = default;
+  StackLst& operator=(const StackLst& src);
 
-  [[nodiscard]]  bool IsEmpty() const noexcept;
+  StackLst& operator=(StackLst&& src) noexcept;
+
+  [[nodiscard]] bool IsEmpty() const noexcept;
 
   void Pop() noexcept;
 
   void Push(const Complex& val);
 
-  [[nodiscard]] Complex& Top();
+  [[nodiscard]] Complex& Top()&;
 
-  [[nodiscard]] const Complex& Top() const;
+  [[nodiscard]] const Complex& Top() const&;
 
   void Clear() noexcept;
 
 private:
   struct Node {
-    Node(Complex v_, Node* n) { v = v_; next = n; }
-    Complex v;
+    Complex val;
     Node* next = nullptr;
   };
-  Node* head_ = nullptr;
+
+  Node* head_ = nullptr;   //!< 
 };
 
-#endif // !STACKARR_STACKARR_HPP_20240203 
+#endif

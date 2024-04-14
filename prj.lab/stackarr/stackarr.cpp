@@ -66,9 +66,9 @@ bool StackArr::IsEmpty() const noexcept {
 }
 
 void StackArr::Pop() noexcept {
-  if (!IsEmpty()) {
-    i_top_ -= 1;
-  }
+    if (!IsEmpty()) {
+      i_top_ -= 1;
+    }
 }
 
 void StackArr::Push(const Complex& val) {
@@ -102,4 +102,5 @@ const Complex& StackArr::Top() const& {
 
 void StackArr::Clear() noexcept {
   i_top_ = -1;
+  delete[] data_;
 }

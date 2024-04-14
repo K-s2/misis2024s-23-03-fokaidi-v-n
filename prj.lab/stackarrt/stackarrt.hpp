@@ -48,11 +48,11 @@ StackArrT<T>::~StackArrT() {
 
 template <class T>
 StackArrT<T>::StackArrT(const StackArrT& src)
-  : i_top_(st.i_top_) {
-    if (!st.IsEmpty()) {
+  : i_top_(src.i_top_) {
+    if (!src.IsEmpty()) {
       size_ = ((i_top_ + 1) / 4 + 1) * 4;
       data_ = new T[size_];
-      std::copy(st.data_, st.data_ + i_top_ + 1, data_);
+      std::copy(src.data_, src.data_ + i_top_ + 1, data_);
     }
 }
 
@@ -93,4 +93,64 @@ void StackArrT<T>::Push(const T& val) {
   data_[++i_top_] = val;
 }
 
+template <class T>
+void StackArrT<T>::Pop() noexcept {
+  if (!IsEmpty()) {
+    i_top_ -= 1;
+  }
+}
+
+template <class T>
+StackArrT<T>& StackArrT<T>::operator=(const StackArrT& src) {
+  if (this != &src) {
+    if (src.IsEmpty()) {
+      Clear();
+    }
+    if (size_ <= src.i_top_) {
+      size_ = (src.i_top_ + 4) / 4 * 4;
+      T* buf = new T[size_];
+      std::swap(data_, buf);
+      delete[] buf;
+    }
+    i_top_ = src.i_top_;
+    std::copy(src.data_, src.data_ + i_top_ + 1, data_);
+  }
+  return *this;
+}
+
+template <class T>
+StackArrT<T>& StackArrT<T>::operator=(StackArrT&& src) noexcept {
+  if (this != &src) {
+    if (!src.IsEmpty()) {
+      std::swap(size_, src.size_);
+      std::swap(i_top_, src.i_top_);
+      std::swap(data_, src.data_);
+    }
+    else {
+      Clear();
+    }
+  }
+  return *this;
+}
+
+
+#if 1
+template <class T>
+StackArrT<T>::StackArrT(StackArrT&& st) noexcept {
+  std::swap(st.size_, size_);
+  std::swap(st.i_top_, i_top_);
+  std::swap(st.data_, data_);
+}
+#else
+template <class T>
+StackArrT<T>::StackArrT(StackArrT&& st) noexcept
+  : StackArrT(st) {
+}
+#endif
+
+template <class T>
+void StackArrT<T>::Clear() noexcept {
+  i_top_ = -1;
+  delete[] data_;
+}
 #endif
