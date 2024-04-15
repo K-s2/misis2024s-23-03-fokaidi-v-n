@@ -1,13 +1,52 @@
-#include <queuearr/queuearr.hpp>
 
-#include <algorithm>
-#include <stdexcept>
+#pragma once
+#ifndef QUEUEARR_QUEUEARR_HPP_20240227
+#define QUEUEARR_QUEUEARR_HPP_20240227
 
-std::ptrdiff_t QueueArr::Count() const {
+#include <cstddef>
+template <class T>
+class QueueArrT final {
+public:
+  QueueArrT() = default;
+
+  QueueArrT(const QueueArrT& src);
+
+  QueueArrT(QueueArrT&& src) noexcept;
+
+  ~QueueArrT();
+
+  QueueArrT& operator=(const QueueArrT& src);
+
+  QueueArrT& operator=(QueueArrT&& src);
+
+  [[nodiscard]] bool IsEmpty() const noexcept;
+
+  void Pop() noexcept;
+
+  void Push(const T& val);
+
+  [[nodiscard]] T& Top();
+
+  [[nodiscard]] const T& Top() const;
+
+  void Clear() noexcept;
+
+private:
+  std::ptrdiff_t size_ = 0;  //!< 
+  T* data_ = nullptr;  //!< 
+  std::ptrdiff_t head_ = -1; //!< 
+  std::ptrdiff_t tail_ = -1; //!< 
+private:
+  std::ptrdiff_t Count() const;
+};
+
+template <class T>
+std::ptrdiff_t QueueArrT<T>::Count() const {
   return IsEmpty() ? 0 : (tail_ + size_ - head_) % size_ + 1;
 }
 
-QueueArr& QueueArr::operator=(const QueueArr& src) {
+template <class T>
+QueueArrT<T>& QueueArrT<T>::operator=(const QueueArrT<T>& src) {
   if (this != &src) {
     std::ptrdiff_t count = src.Count();
     if (0 == count) {
@@ -17,7 +56,7 @@ QueueArr& QueueArr::operator=(const QueueArr& src) {
       if (size_ < count) {
         size_ = (count + 4) / 4 * 4;
         delete[] data_;
-        data_ = new Complex[size_];
+        data_ = new T[size_];
       }
       if (src.head_ < src.tail_) {
         std::copy(src.data_ + src.head_, src.data_ + src.tail_ + 1, data_);
@@ -33,13 +72,14 @@ QueueArr& QueueArr::operator=(const QueueArr& src) {
   return *this;
 }
 
-QueueArr::QueueArr(const QueueArr& src) {
+template <class T>
+QueueArrT<T>::QueueArrT(const QueueArrT& src) {
   if (!src.IsEmpty()) {
     std::ptrdiff_t count = src.Count();
     head_ = 0;
     tail_ = count - 1;
     size_ = (count + 4) / 4 * 4;
-    data_ = new Complex[size_];
+    data_ = new T[size_];
     if (src.head_ < src.tail_) {
       std::copy(src.data_ + src.head_, src.data_ + src.tail_ + 1, data_);
     }
@@ -50,14 +90,16 @@ QueueArr::QueueArr(const QueueArr& src) {
   }
 }
 
-QueueArr::QueueArr(QueueArr&& src) noexcept {
+template <class T>
+QueueArrT<T>::QueueArrT(QueueArrT&& src) noexcept {
   std::swap(size_, src.size_);
   std::swap(data_, src.data_);
   std::swap(head_, src.head_);
   std::swap(tail_, src.tail_);
 }
 
-QueueArr& QueueArr::operator=(QueueArr&& src) {
+template <class T>
+QueueArrT<T>& QueueArrT<T>::operator=(QueueArrT&& src) {
   if (this != &src) {
     std::swap(size_, src.size_);
     std::swap(data_, src.data_);
@@ -67,15 +109,19 @@ QueueArr& QueueArr::operator=(QueueArr&& src) {
   return *this;
 }
 
-QueueArr::~QueueArr() {
+template <class T>
+QueueArrT<T>::~QueueArrT() {
   delete[] data_;
 }
 
-bool QueueArr::IsEmpty() const noexcept {
+template <class T>
+bool QueueArrT<T>::IsEmpty() const noexcept {
   return head_ < 0;
 }
 
-void QueueArr::Pop() noexcept {
+
+template <class T>
+void QueueArrT<T>::Pop() noexcept {
   if (!IsEmpty()) {
     if (head_ != tail_) {
       head_ = (head_ + 1) % size_;
@@ -86,10 +132,11 @@ void QueueArr::Pop() noexcept {
   }
 }
 
-void QueueArr::Push(const Complex& val) {
+template <class T>
+void QueueArrT<T>::Push(const T& val) {
   if (nullptr == data_) {
     size_ = 2;
-    data_ = new Complex[size_];
+    data_ = new T[size_];
   }
   if (IsEmpty()) {
     head_ = 0;
@@ -98,7 +145,7 @@ void QueueArr::Push(const Complex& val) {
   else {
     if (head_ == (tail_ + 1) % size_) {
       // resize
-      Complex* buf = new Complex[size_ * 2];
+      T* buf = new T[size_ * 2];
       std::swap(buf, data_);
       if (head_ < tail_) {
         std::copy(buf + head_, buf + tail_ + 1, data_);
@@ -118,20 +165,26 @@ void QueueArr::Push(const Complex& val) {
   data_[tail_] = val;
 }
 
-Complex& QueueArr::Top() {
+template <class T>
+T& QueueArrT<T>::Top() {
   if (IsEmpty()) {
     throw std::logic_error("QueueArr - try get top form empty queue.");
   }
   return data_[head_];
 }
 
-const Complex& QueueArr::Top() const {
+template <class T>
+const T& QueueArrT<T>::Top() const {
   if (IsEmpty()) {
     throw std::logic_error("QueueArr - try get top form empty queue.");
   }
   return data_[head_];
 }
 
-void QueueArr::Clear() noexcept {
+template <class T>
+void QueueArrT<T>::Clear() noexcept {
   head_ = -1;
 }
+
+
+#endif

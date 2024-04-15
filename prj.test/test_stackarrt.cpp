@@ -9,4 +9,10 @@ TEST_CASE("[stacklstt] - ctor") {
   StackArrT<float> stf;
   StackArrT<int> sti;
   StackArrT<std::string> sts;
+  int a = 3;
+  sti.Push(a);
+  CHECK(sti.Top() == a);
+  std::string s = "hfhfhhf";
+  sts.Push(s);
+  CHECK(sts.Top() == s);
 }
