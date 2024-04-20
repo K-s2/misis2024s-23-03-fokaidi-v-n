@@ -9,4 +9,4 @@ add_subdirectory(queuelstpr)
 add_subdirectory(bitset)
 add_subdirectory(stackarrt)
 add_subdirectory(queuearrt)
-
+add_subdirectory(queuelstt)
