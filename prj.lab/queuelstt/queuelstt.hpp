@@ -17,7 +17,7 @@ public:
 
   QueueLstT& operator=(const QueueLstT& src);
 
-  QueueLstT& operator=(QueueLstT&& src) noexcept;
+  QueueLstT& operator=(QueueLstT&& other) noexcept;
 
   [[nodiscard]] bool IsEmpty() const noexcept;
 
@@ -65,15 +65,13 @@ QueueLstT<T>::QueueLstT(QueueLstT&& src) noexcept
 
 
 template <class T>
-QueueLstT<T>& QueueLstT<T>::operator=(QueueLstT&& other) {
+QueueLstT<T>& QueueLstT<T>::operator=(QueueLstT&& other) noexcept {
   if (this != &other) {
     Clear();
     head_ = other.head_;
     tail_ = other.tail_;
-    size_ = other.size_;
     other.head_ = nullptr;
     other.tail_ = nullptr;
-    other.size_ = 0;
   }
   return *this;
 }
@@ -86,19 +84,10 @@ QueueLstT<T>& QueueLstT<T>::operator=(const QueueLstT& src) {
     }
     else {
       // TODO: faster and smartert
-      QueueLst copy(src);
+      QueueLstT copy(src);
       std::swap(head_, copy.head_);
       std::swap(tail_, copy.tail_);
     }
-  }
-  return *this;
-}
-
-template <typename T>
-QueueLstT<T>& QueueLstT<T>::operator=(QueueLstT&& src) noexcept {
-  if (this != &src) {
-    std::swap(head_, src.head_);
-    std::swap(tail_, src.tail_);
   }
   return *this;
 }
@@ -155,12 +144,6 @@ void QueueLstT<T>::Clear() noexcept {
   }
 }
 
-template <typename T>
-QueueLstT<T>::QueueLstT(QueueLstT&& src) noexcept :
-  head_(src.head_), tail_(src.tail_) {
-  src.head_ = nullptr;
-  src.tail_ = nullptr;
-}
 
 
 #endif
