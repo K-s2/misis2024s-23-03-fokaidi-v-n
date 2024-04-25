@@ -64,3 +64,6 @@
 # Executables
 *.exe
 *.out
+
+#project  manager
+*.vspkg
