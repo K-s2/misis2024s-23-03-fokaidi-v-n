@@ -76,10 +76,10 @@ public:
   std::ofstream& WriteBinary(std::ofstream& cout);
   std::ifstream& ReadBinary(std::ifstream& cin);
 
-  // std::ostream& WriteTxt(std::ostream&)
-  // std::ostream& WriteBinary(std::ostream&)
-  // std::istream& ReadTxt(std::istream&)
-  // std::istream& RaadBinary(std::istream&)
+  std::ostream& WriteTxt(std::ostream&);
+  std::ostream& WriteBinary(std::ostream&);
+  std::istream& ReadTxt(std::istream&);
+  std::istream& RaadBinary(std::istream&);
 private:
   std::int32_t size_ = 0;
   std::vector<uint32_t> bits_;
