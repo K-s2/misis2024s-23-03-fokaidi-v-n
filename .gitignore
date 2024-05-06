@@ -2,6 +2,7 @@
 *.d
 *.vs
 */out
+*.json
 
 # Compiled Object files
 *.slo
