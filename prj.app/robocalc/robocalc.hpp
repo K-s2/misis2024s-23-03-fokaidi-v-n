@@ -40,6 +40,9 @@ public:
     double number;
 
     while (std::cin >> command >> number) {
+      if (command == "REV") {
+        rev(number);
+      }
       if (command == "end") {
         break;
       }
