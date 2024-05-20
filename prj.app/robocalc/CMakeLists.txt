@@ -1,7 +1,7 @@
 find_package(doctest)
 add_library(robocalc INTERFACE robocalc.hpp)
 set_property(TARGET robocalc PROPERTY CXX_STANDARD 20)
-target_include_directories(queuearrt INTERFACE
+target_include_directories(robocalc INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
   $<INSTALL_INTERFACE:include>
 )
