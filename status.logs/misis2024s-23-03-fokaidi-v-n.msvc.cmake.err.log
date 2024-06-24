@@ -4,6 +4,6 @@ Call Stack (most recent call first):
   C:/Program Files/CMake/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake:600 (_FPHSA_FAILURE_MESSAGE)
   C:/Program Files/CMake/share/cmake-3.28/Modules/FindGnuplot.cmake:53 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
   D:/programs/vcpkg/scripts/buildsystems/vcpkg.cmake:859 (_find_package)
-  prj.app/timing_q/CMakeLists.txt:5 (find_package)
+  prj.app/timing_q/CMakeLists.txt:4 (find_package)
 
 
